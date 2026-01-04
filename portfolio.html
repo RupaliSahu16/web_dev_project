@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Portfolio</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:linear-gradient(135deg,#03000a,#b76af1);;
+  --card:rgba(30,41,59,0.65);
+  --accent:#d7a8f9;
+  --text:#e5e7eb;
+  --muted:#d5dce5;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Inter',sans-serif;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+}
+
+/* ---------- NAV ---------- */
+.nav{
+  position:fixed;
+  top:20px;
+  right:20px;
+  display:flex;
+  gap:12px;
+  background:#09000a99;
+  backdrop-filter:blur(10px);
+  padding:10px 16px;
+  border-radius:999px;
+  box-shadow:0 20px 25px -5px rgb(0 0 0 / 0.3);
+  z-index:1000;
+}
+
+.nav a{
+  color:var(--text);
+  text-decoration:none;
+  font-size:0.9rem;
+  padding:6px 14px;
+  border-radius:999px;
+  transition:background 0.3s ease,color 0.3s ease;
+}
+
+.nav a:hover{
+  background:var(--accent);
+  color:#fff;
+}
+
+/* ---------- SECTIONS ---------- */
+section{
+  padding:90px 10%;
+  opacity:0;
+  transform:translateY(40px);
+  transition:all 0.8s cubic-bezier(0.4,0,0.2,1);
+}
+
+section.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+h2{
+  font-size:2rem;
+  margin-bottom:30px;
+  letter-spacing:-0.03em;
+}
+
+/* ---------- HOME ---------- */
+#home{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:40px;
+}
+
+.hero-text{
+  max-width:550px;
+}
+
+/* BOX MODEL HERO */
+.hero-box{
+  background:var(--card);
+  backdrop-filter:blur(12px);
+  padding:30px 35px;
+  border-radius:20px;
+  border:1px solid rgba(255, 255, 255, 0.4);
+  margin-bottom:30px;
+  box-shadow:0 20px 25px -5px rgba(2, 2, 2, 0.3);
+  transition:transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.hero-box:hover{
+  transform:translateY(-4px);
+  box-shadow:0 30px 40px -10px rgba(69, 1, 73, 0.4);
+}
+
+.hero-box h1{
+  font-size:3rem;
+  margin-bottom:12px;
+}
+
+.hero-box span{
+  color:var(--accent);
+}
+
+.hero-box p{
+  color:var(--muted);
+}
+
+.btn{
+  display:inline-block;
+  padding:12px 26px;
+  background:var(--accent);
+  color:#fff;
+  border-radius:30px;
+  text-decoration:none;
+  font-weight:600;
+  transition:transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 20px 25px -5px rgb(0 0 0 / 0.3);
+}
+
+/* PROFILE IMAGE */
+.hero-img{
+  width:260px;
+  height:260px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#03000a,#090909);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.hero-img img{
+  width:92%;
+  height:92%;
+  border-radius:50%;
+  object-fit:cover;
+}
+
+/* ---------- CARD ---------- */
+.card{
+  background:var(--card);
+  backdrop-filter:blur(12px);
+  border-radius:20px;
+  padding:30px;
+  box-shadow:0 20px 25px -5px rgb(0 0 0 / 0.2);
+}
+
+/* ---------- SKILLS ---------- */
+.skills-box{
+  margin-bottom:35px;
+  border:1px solid rgba(255, 255, 255, 0.4);
+}
+
+.skill-pill{
+  display:inline-block;
+  padding:10px 18px;
+  margin:6px;
+  border-radius:999px;
+  background:rgba(55, 1, 73, 0.15);
+  border:1px solid rgba(250, 249, 251, 0.244);
+  transition:background 0.3s ease;
+}
+
+.skill-pill:hover{
+  background:rgba(57, 16, 139, 0.35);
+}
+
+/* ---------- PROJECTS ---------- */
+.projects-grid{
+  display:grid;
+  border:5px solid rgba(9, 6, 6, 0.4);
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:25px;
+}
+
+.project-card{
+  position:relative;
+  overflow:hidden;
+  border-radius:20px;
+}
+
+.project-card img{
+  width:100%;
+  height:200px;
+  object-fit:cover;
+  transition:transform 0.6s ease;
+}
+
+.project-card:hover img{
+  transform:scale(1.1);
+}
+
+.project-info{
+  position:absolute;
+  inset:0;
+  background:rgba(50, 1, 61, 0.85);
+  opacity:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:20px;
+  transition:opacity 0.5s ease;
+}
+
+.project-card:hover .project-info{
+  opacity:1;
+}
+
+/* ---------- CONTACT ---------- */
+.contact-box a{
+  display:inline-block;
+  margin-top:10px;
+  color:var(--accent);
+  text-decoration:none;
+  font-weight:600;
+}
+
+/* ---------- FOOTER ---------- */
+footer{
+  text-align:center;
+  padding:30px;
+  color:var(--muted);
+  font-size:0.9rem;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media(max-width:768px){
+  #home{
+    flex-direction:column-reverse;
+    text-align:center;
+  }
+}
+.hero-img img{
+  object-fit: cover;
+  object-position: center top; /* keeps face in focus */
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#home">Home</a>
+  <a href="#about">About</a>
+  <a href="#skills">Skills</a>
+  <a href="#projects">Projects</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<!-- HOME -->
+<section id="home" class="show">
+  <div class="hero-text">
+    <div class="hero-box">
+      <h1>Hello, I’m <span>RUPALI SAHU</span></h1>
+      <p>
+        First-semester Computer Science student passionate about
+        web development, clean UI design, and learning modern technologies.
+      </p>
+    </div>
+    <a href="#projects" class="btn">View My Work</a>
+  </div>
+
+  <div class="hero-img">
+    <!-- ADD YOUR PHOTO FILE NAME HERE -->
+    <img src="C:\Users\Rupali\OneDrive\Pictures\Screenshots\profile.jpeg" alt="Profile Photo">
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <h2>About</h2>
+  <div class="card">
+    <p>
+      I am a first-year Computer Science student learning the fundamentals
+      of web development. This portfolio demonstrates my understanding of
+      HTML structure, CSS box model, responsive layouts, and basic interactivity
+      using JavaScript.
+    </p>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <h2>Skills</h2>
+
+  <div class="skills-box card">
+    <h3>Technical Skills</h3>
+    <span class="skill-pill">HTML5</span>
+    <span class="skill-pill">CSS3</span>
+    <span class="skill-pill">Box Model</span>
+    <span class="skill-pill">Flexbox</span>
+    <span class="skill-pill">CSS Grid</span>
+    <span class="skill-pill">Responsive Design</span>
+    <span class="skill-pill">Basic JavaScript</span>
+  </div>
+
+  <div class="skills-box card">
+    <h3>Soft Skills</h3>
+    <span class="skill-pill">Problem Solving</span>
+    <span class="skill-pill">Creative Thinking</span>
+    <span class="skill-pill">Time Management</span>
+    <span class="skill-pill">Team Collaboration</span>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <h2>Projects</h2>
+
+  <div class="projects-grid">
+    <div class="project-card">
+      <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97" alt="">
+      <div class="project-info">
+        <p>
+          Personal Portfolio Website<br>
+          Implemented semantic HTML, CSS box model,
+          flexbox, transitions, and responsive design.
+        </p>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085" alt="">
+      <div class="project-info">
+        <p>
+          Academic Mini Project<br>
+          Focused on layout structure and UI consistency.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <h2>Contact</h2>
+  <div class="card contact-box">
+    <p>Feel free to connect with me via email:</p>
+    <a href="mailto:yourname@email.com">rupali.sahu@email.com</a>
+  </div>
+</section>
+
+<footer>
+  © 2026 | Student Portfolio
+</footer>
+
+<script>
+const sections=document.querySelectorAll("section");
+window.addEventListener("scroll",()=>{
+  const trigger=window.innerHeight*0.85;
+  sections.forEach(sec=>{
+    if(sec.getBoundingClientRect().top<trigger){
+      sec.classList.add("show");
+    }
+  });
+});
+</script>
+
+</body>
+</html>
